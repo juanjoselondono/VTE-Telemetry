@@ -85,13 +85,13 @@ export const DashboardSidebar = (props) => {
                   color="inherit"
                   variant="subtitle1"
                 >
-                  Lambda Team
+                  VTE Team - EIA
                 </Typography>
                 <Typography
                   color="neutral.400"
                   variant="body2"
                 >
-                  Escuela De Ingeniería EIA
+                  Universidad EIA 2025 
                 </Typography>
               </div>
 
@@ -133,7 +133,7 @@ export const DashboardSidebar = (props) => {
                   color="inherit"
                   variant="subtitle1"
                 >
-                  ©2023
+                  ©2025
                 </Typography>
                 <Typography
                   color="inherit"

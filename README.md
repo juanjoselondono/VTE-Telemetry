@@ -1,7 +1,5 @@
-## LAMBDA APP EIA
-Dashboard IOT para telemetría calidad del aire. Se conecta por medio de firebase RTDB y próximamente a un servidor mqtt
-
-## RUN APP: https://lambda-app.vercel.app/
+## VTE APP EIA
+Dashboard IOT para telemetría del vehiculo de tracción electrico de la universidad eia. Se conecta por medio de MQTT y websockets en tiempo real a los sensores del vehículo
 
 ## License
 
