@@ -1,4 +1,5 @@
 // server.js
+require('dotenv').config({ path: '.env.local' });
 const next = require('next');
 const http = require('http');
 const { Server } = require('socket.io');
@@ -8,11 +9,10 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-// Configuración MQTT
-const MQTT_BROKER = 'mqtt://18.219.125.138:1883';
-const MQTT_USER = 'VTEprueba';
-const MQTT_PASS = '1234';
-const MQTT_TOPIC = 'sensor/data';
+const MQTT_BROKER= process.env.MQTT_BROKER_URL;
+const MQTT_USER = process.env.MQTT_USER;
+const MQTT_PASS = process.env.MQTT_PASSWORD;
+const MQTT_TOPIC = process.env.SUBSCRIPTION_TOPIC;
 
 const PORT = process.env.PORT || 3000;
 

@@ -5,10 +5,10 @@ import mqtt from 'mqtt';
 // ***********************************************
 // ⚠️ CONFIGURACIÓN CLAVE
 // ***********************************************
-const MQTT_BROKER_URL = 'mqtt://18.219.125.138:1883'; 
-const MQTT_USER = 'VTEprueba'; 
-const MQTT_PASSWORD = '1234'; 
-const SUBSCRIPTION_TOPIC = 'sensor/data';
+const MQTT_BROKER_URL = process.env.MQTT_BROKER_URL;
+const MQTT_USER = process.env.MQTT_USER;
+const MQTT_PASSWORD = process.env.MQTT_PASSWORD;
+const SUBSCRIPTION_TOPIC = process.env.SUBSCRIPTION_TOPIC;
 // ***********************************************
 
 let mqttClient = null;
