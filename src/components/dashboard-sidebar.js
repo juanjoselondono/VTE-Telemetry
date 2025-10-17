@@ -139,7 +139,7 @@ export const DashboardSidebar = (props) => {
                   color="inherit"
                   variant="subtitle1"
                 >
-                    <a style={{color:'white'}} href='https://juanlondonod.ml/'>https://juanlondonod.ml/</a>
+                    <a style={{color:'white'}} href='https://thejuanlondono.vercel.app/'>https://juanlondonod.ml/</a>
                 </Typography>
                 </Box>
           </div>

@@ -3,77 +3,54 @@ import { Box, Container, Grid } from '@mui/material';
 import { DashboardLayout } from '../components/dashboard-layout';
 import { SocketProvider } from '../context/SocketContext';
 import SensorData from '../components/SensorData';
-//import { TrafficByDevice } from 'src/components/dashboard/traffic-by-device';  estas son las tablas
-//icons
+import BatteryLevel from 'src/components/BatteryData';
+
 const Dashboard = () => {
-  return(
-  <div>
-    <Head>
-      <title>
-        Dashboard | Lambda Team
-      </title>
-    </Head>
-    <Box
-      component="main"
-      sx={{
-        flexGrow: 1,
-        py: 8
-      }}
-    >
-      <Container maxWidth={false}>
-        <Grid
-          container
-          spacing={3}
-        >
-          <Grid
-            item
-            lg={12}
-            md={12}
-            xl={12}
-            xs={12}
-          >
-            <SocketProvider>            
-            <div style={{ display: 'flex', gap: '20px' }}>
-                {/* Sensor de Temperatura: Filtra por 'temp01' */}
-                <SensorData 
-                    title="Sensor de RPM" 
-                    identifier="rpm" // Esto se usa en useSensorData para filtrar
-                />
-                
-                {/* Otro Sensor: Filtra por 'press03' */}
-                <SensorData 
-                    title="Sensor de Bateria" 
-                    identifier="battery"
-                />
-                <SensorData 
-                    title="Sensor de Potencia" 
-                    identifier="potencia"
-                />
-            </div>
-        </SocketProvider>
+  return (
+    <div>
+      <Head>
+        <title>Dashboard | Lambda Team</title>
+      </Head>
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          py: 8,
+        }}
+      >
+        <Container maxWidth={false}>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <SocketProvider>
+                {/* --- GRID RESPONSIVE --- */}
+                <Grid
+                  container
+                  spacing={3}
+                  sx={{
+                    display: 'grid',
+                    gridTemplateColumns: {
+                      xs: '1fr',          // Móviles → 1 columna
+                      sm: '1fr 1fr',      // Tablets → 2 columnas
+                      md: '1fr 1fr 1fr',  // Laptops → 3 columnas
+                      lg: '1fr 1fr 1fr',  // Monitores grandes → 3 columnas
+                    },
+                    gap: '20px',
+                    justifyItems: 'center',
+                  }}
+                >
+                  <SensorData title="Sensor de RPM" identifier="rpm" />
+                  <SensorData title="Sensor de Velocidad" identifier="speed" />
+                  <BatteryLevel title="Sensor de Batería" identifier="battery" />
+                </Grid>
+              </SocketProvider>
+            </Grid>
           </Grid>
-          <Grid
-            item
-            lg={12}
-            md={12}
-            xl={12}
-            xs={12}
-          >
-          </Grid>
-        </Grid>
-      </Container>
-    </Box>
-  </div>
-  )
+        </Container>
+      </Box>
+    </div>
+  );
 };
 
-Dashboard.getLayout = (page) => (
-  <DashboardLayout>
-    {page}
-  </DashboardLayout>
-);
+Dashboard.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 export default Dashboard;
-
-
-   

@@ -14,6 +14,7 @@ const MAX_VALUES = {
   'Sensor de RPM': { max: 600, unit: 'RPM' },
   'Sensor de Batería': { max: 100, unit: '%' }, 
   'Sensor de Potencia': { max: 500, unit: 'kW' }, 
+  'Sensor de Velocidad': { max: 60, unit: 'km/h' },
 };
 
 const GaugeScale = ({ maxValue, size, startAngle, endAngle, steps }) => {

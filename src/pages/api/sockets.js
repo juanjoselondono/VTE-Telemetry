@@ -30,11 +30,12 @@ const ioHandler = (req, res) => {
 
       // Tomar los datos del interior si vienen dentro de "message"
       const inner = data.message || data;
-
+      const WHEEL_DIAMETER = 0.6; // en metros
       const payload = {
         rpm: inner.rpm,
         potencia: inner.potencia,
         battery: inner.battery,
+        speed: parseInt((2 * Math.PI * (WHEEL_DIAMETER/2) * inner.rpm * 60) / 1000),
         timestamp: new Date().toISOString(),
       };
 
