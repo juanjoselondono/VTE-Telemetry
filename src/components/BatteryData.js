@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import useSensorData from "./hooks/useSensorData";
+import { formatInTimeZone } from 'date-fns-tz';
 
 const BatteryLevel = ({ title = "Sensor de Batería", identifier = "bateria" }) => {
   const { value, isConnected, timestamp } = useSensorData(identifier);
@@ -69,7 +70,7 @@ const BatteryLevel = ({ title = "Sensor de Batería", identifier = "bateria" }) 
     },
     connectionStatus: {
       fontSize: "1rem",
-      marginTop: "8px",
+      marginTop: "25%",
     },
     statusText: {
       fontWeight: 700,
@@ -156,16 +157,13 @@ const BatteryLevel = ({ title = "Sensor de Batería", identifier = "bateria" }) 
 
       {/* --- Info inferior --- */}
       <div style={styles.infoSection}>
-        <p>
-          <span style={{ fontWeight: 500 }}>Valor Máximo:</span> {maxValue} {unit}
-        </p>
         <p style={styles.connectionStatus}>
           Conexión Global:{" "}
           <strong style={styles.statusText}>
             {isConnected ? "CONECTADO" : "DESCONECTADO"}
           </strong>
         </p>
-        <p style={styles.timestampText}>Último dato: {timestamp}</p>
+        <p style={styles.timestampText}>Último dato: {formatInTimeZone(timestamp, 'America/Bogota', "yyyy-MM-dd HH:mm:ss 'GMT'XXX")}</p>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import React from "react";
 import useSensorData from "./hooks/useSensorData";
 import { motion } from "framer-motion";
+import { formatInTimeZone } from 'date-fns-tz';
 
 const LOGO_COLOR = '#CCFF00'; 
 const START_ANGLE = 135;
@@ -173,7 +174,7 @@ const SensorData = ({ title, identifier }) => {
         <p style={styles.connectionStatus}>
           Conexión Global: <strong style={styles.statusText}>{isConnected ? "CONECTADO" : "DESCONECTADO"}</strong>
         </p>
-        <p style={styles.timestampText}>Último dato: {timestamp}</p>
+        <p style={styles.timestampText}>Último dato: {formatInTimeZone(timestamp, 'America/Bogota', "yyyy-MM-dd HH:mm:ss 'GMT'XXX")}</p>
       </div>
     </div>
   );

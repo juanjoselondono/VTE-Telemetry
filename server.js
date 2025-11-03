@@ -4,12 +4,13 @@ const next = require('next');
 const http = require('http');
 const { Server } = require('socket.io');
 const mqtt = require('mqtt');
+const { admin, db } = require('./lib/firebaseAdmin'); // Firebase Admin
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-const MQTT_BROKER= process.env.MQTT_BROKER_URL;
+const MQTT_BROKER = process.env.MQTT_BROKER_URL;
 const MQTT_USER = process.env.MQTT_USER;
 const MQTT_PASS = process.env.MQTT_PASSWORD;
 const MQTT_TOPIC = process.env.SUBSCRIPTION_TOPIC;
@@ -30,7 +31,6 @@ app.prepare().then(() => {
     },
   });
 
-  // Guardamos globalmente (por si quieres acceder desde otros módulos)
   global.io = io;
 
   io.on('connection', (socket) => {
@@ -55,7 +55,8 @@ app.prepare().then(() => {
     });
   });
 
-  mqttClient.on('message', (topic, message) => {
+  // Nota: incluimos 'packet' para metadatos del mensaje MQTT
+  mqttClient.on('message', (topic, message, packet) => {
     const raw = message.toString();
     let payload;
     try {
@@ -72,6 +73,29 @@ app.prepare().then(() => {
       payload,
       timestamp: new Date().toISOString(),
     });
+
+    // --- Guardar en Firestore (sin deviceId, colección plana 'telemetry') ---
+    const identifier =
+      (typeof payload === 'object' && payload?.identifier) ||
+      topic.split('/').slice(-1)[0];
+
+    const docData = {
+      payload: typeof payload === 'object' ? payload : null,
+      receivedAt: admin.firestore.Timestamp.now(),
+      deviceTimestamp:
+        (typeof payload === 'object' && payload?.timestamp)
+          ? new Date(payload.timestamp)
+          : null,
+    };
+
+    // Una doc por mensaje en la colección 'telemetry'
+    db.collection('telemetry')
+      .add(docData)
+      .catch((err) => {
+        console.error('❌ Error guardando en Firestore:', err);
+      });
+
+    // Si quieres evitar posibles duplicados QoS1, considera usar .doc(<id determinístico>).set(...)
   });
 
   mqttClient.on('error', (err) => console.error('❌ Error MQTT:', err.message));
